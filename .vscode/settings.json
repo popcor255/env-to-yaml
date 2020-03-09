@@ -1,7 +1,6 @@
 {
     "terminal.integrated.shell.linux": "/usr/bin/bash",
     "go.gopath": "/usr/lib/go",
-    "go.goroot": "/usr/lib/go",
     "go.formatTool": "goformat",
     "go.autocompleteUnimportedPackages": true,
     "[go]": {

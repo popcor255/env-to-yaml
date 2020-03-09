@@ -2,20 +2,32 @@ package main
 
 import (
 	"testing"
-	"fmt"
+	"path/filepath"
+	"os"
 )
 
-func TestEnvParse(t *testing.T) {
-    result, error := EnvParse()
 
-	fmt.Println(result)
+//Should return true if the name of the file exist in the current directory
+func TestFileExist(t *testing.T){
+	received := FileExist(".env")
+	expected := true
 
-	if error != nil {
-       t.Errorf("Error not expected from TestEnvParse")
-    }
+	if received != expected {
+       t.Error("Expected: ", expected, "Received: ", received)
+	}
 }
 
+//Should return the directory of the where the file is being run on the computer
+func TestCurrentDir(t *testing.T) {
 
-func TestGetCurrentDir(t *testing.T) {
-	result, error := 
+	received, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	expected, err := CurrentDir()
+
+	if expected != received {
+       t.Error("Expected: ", expected, "Received: ", received)
+	}
+	
+	if err != nil {
+		t.Error("Error: ", err)
+	}
 }
