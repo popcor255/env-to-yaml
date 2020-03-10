@@ -4,35 +4,26 @@ import (
 	"github.com/joho/godotenv"
     "log"
     "os"
-	"path/filepath"
+	"strings"
 )
 
 func main() {
-  file := ".env"
+  	file := ".env"
+	err := godotenv.Load(file)
+	EnvMap := make(map[string]string)
 
-  if FileExist(file) {
-		err := godotenv.Load(file)
-		if err != nil {
-			log.Fatal("Error loading .env file")
-		}
-	}
-}
-
-
-func FileExist(name string) bool{
-	dir, _ := CurrentDir()
-	if _, err := os.Stat(dir + name); os.IsNotExist(err) {
-		return true
-	}
-	return false
-}
-
-func CurrentDir() (dir string, err error){
-	dir, err = filepath.Abs(filepath.Dir(os.Args[0]))
-	
 	if err != nil {
-            log.Fatal(err)
+		log.Fatal("Error loading .env file")
+	}
+
+	for _, e := range os.Environ() {
+		subStrings := strings.Split(e, "=")
+		key := subStrings[0]
+		value := subStrings[1]
+		EnvMap[key] = value
 	}
 	
-    return
+	for key, value := range EnvMap {
+		log.Println(key, value)
+	}
 }
